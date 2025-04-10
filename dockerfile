@@ -9,3 +9,5 @@ RUN tar -xf /ashish/apache-tomcat-9.0.104.tar.gz
 #COPY tomcat.service /etc/systemd/system/tomcat.service
 RUN mv /ashish/apache-tomcat-9.0.104/webapps/ROOT/index.jsp /ashish/apache-tomcat-9.0.104/webapps/ROOT/index.jsp_bkp
 COPY index.html /ashish/apache-tomcat-9.0.104/webapps/ROOT/
+RUN cd /ashish/apache-tomcat-9.0.104/bin 
+CMD ["/ashish/apache-tomcat-9.0.104/bin/catalina.sh","run"]
