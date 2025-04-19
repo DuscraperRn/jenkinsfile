@@ -46,8 +46,8 @@ pipeline{
 						script{
 							//docker.withRegistry('https://index.docker.io/v1/','dockercreds'){
 							//	env.gi.push()
-								sh "kubectl create ns calculator"
-							}
+							sh "kubectl create ns calculator"
+							//}
 						}
 					}
 				}
