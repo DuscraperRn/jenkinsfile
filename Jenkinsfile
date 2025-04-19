@@ -21,7 +21,7 @@ pipeline{
 			}
 		}
 		stage('SonarQube Analysis') {
-			steps(
+			steps{
 				def mvn = tool 'maven';
 				withSonarQubeEnv() {
 					sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=DuscraperRn_softwarefiles_4d1e1f7f-7163-4a0f-a282-2f8b1827d97d -Dsonar.projectName='softwarefiles'"
