@@ -37,7 +37,7 @@ pipeline{
 					steps{
 						script{
 							//sh "trivy image duscraperrn/${image}:${version}"
-							sh "trivy image duscraperrn/${image}:${version} -o report-${image}-${version}-${BUILD_NUMBER}.txt"
+							sh "trivy image duscraperrn/${image}:${version} -o /tmp/report-${image}-${version}-${BUILD_NUMBER}.txt"
 						}
 					}
 				}
@@ -46,7 +46,7 @@ pipeline{
 						script{
 							//docker.withRegistry('https://index.docker.io/v1/','dockercreds'){
 							//	env.gi.push()
-							sh "kubectl create ns calculator{BUILD_NUMBER}"
+							sh "kubectl create ns calculator${BUILD_NUMBER}"
 							//}
 						}
 					}
