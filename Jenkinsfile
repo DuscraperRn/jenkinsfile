@@ -27,9 +27,9 @@ pipeline{
 						script{
 							def generatedImage=docker.build("duscraperrn/${image}:${version}", "--no-cache .")
 							env.gi=generatedImage
-							//docker.withRegistry('https://index.docker.io/v1/','dockercreds'){
-							//	generatedImage.push()
-							//}
+							docker.withRegistry('https://index.docker.io/v1/','dockercreds'){
+								generatedImage.push()
+							}
 						}
 					}
 				}
@@ -44,8 +44,9 @@ pipeline{
 				stage('Push'){
 					steps{
 						script{
-							docker.withRegistry('https://index.docker.io/v1/','dockercreds'){
-								env.gi.push()
+							#docker.withRegistry('https://index.docker.io/v1/','dockercreds'){
+							#	env.gi.push()
+								sh "kubectl create ns calculator"
 							}
 						}
 					}
