@@ -11,7 +11,7 @@
   <packaging>jar</packaging>
 
   <name>Demo Application</name>
-  <description>A sample Maven project for Jenkins & SonarQube</description>
+  <description>A sample Maven project for Jenkins SonarQube</description>
 
   <properties>
     <maven.compiler.source>11</maven.compiler.source>
