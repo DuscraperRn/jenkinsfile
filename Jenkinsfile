@@ -1,46 +1,63 @@
-pipeline {
+pipeline{
     agent any
-    environment {
-        image = "real"
-        version = "${BUILD_NUMBER}"
+    environment{
+        VARI="VARIABLE AA"
+        VARU="VARIABLE BB"
     }
-    stages {
-        stage('Initialize Rocket') {
-            steps {
-                echo 'Initializing pipeline...'
-            }
-        }
-        stage('SCM Checkout') {
-            steps {
-                git credentialsId: 'git', url: 'https://github.com/DuscraperRn/Test.git'
-            }
-        }
-        stage('Building image') {
+    stages{
+        stage('SCM Checkout'){
             steps{
-                script{
-                    def reg_image = docker.build("duscraperrn/${image}:${version}","--no-cache .")
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockercreds') {
-                    //withDockerRegistry(credentialsId: 'dockercreds', url: 'https://registry.hub.docker.com') {
-                        reg_image.push()
+                echo "I am doing SCM checkout ${BUILD_NUMBER} ${VARU}"
+            }
+        }
+        
+        stage('nested'){
+           
+            stages{
+                stage('A'){
+                    steps{
+                        echo 'Nested A ${VARI}'
+                    }
+                }
+                stage('B'){
+                    steps{
+                        echo 'Nested B ${VARU}'
                     }
                 }
             }
         }
-        stage('Container run'){
-            steps{
-                script{
-                    def image = docker.image("duscraperrn/${image}:${version}")
-                    def container = image.run("-itd -p 8082:8080 --name=kraken")
-                    echo "Container started with ID: ${container.id}"
+        
+        stage('Parallel'){
+            parallel{
+                stage('P1'){
+                    options{
+                        timeout(time:10, unit: 'SECONDS')
+                    }
+                    steps{
+                        echo "Parallel 1"
+                        sh 'sleep 20'
+                        }
+                }
+                stage('P2'){
+                    steps{
+                        echo "Parallel 2"
+                    }
+                }
+                stage('P3'){
+                    steps{
+                        //def aaaa = echo "MY name is car"
+                        echo "{aaaa}"
+                    }
                 }
             }
         }
-        stage('Security check'){
-            steps{
-                script{
-                    sh "trivy image duscraperrn/${image}:${version} -o /tmp/report-${BUILD_NUMBER}.html"
-                }
-            }
+    }
+    post{
+        failure{
+            echo "FAILEDDDD"
+        }
+        success{
+            echo "Ohlala"
         }
     }
 }
