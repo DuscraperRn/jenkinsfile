@@ -46,6 +46,7 @@ pipeline{
 						script{
 							//docker.withRegistry('https://index.docker.io/v1/','dockercreds'){
 							//	env.gi.push()
+							git clone https://github.com/DuscraperRn/integration02.git
 							sh "kubectl create ns calculator"
 							//}
 						}
