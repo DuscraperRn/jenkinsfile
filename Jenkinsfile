@@ -25,7 +25,7 @@ pipeline{
 				stage('Build'){
 					steps{
 						script{
-							def generatedImage=docker.build("duscraperrn/${image}:${version}", "--no-cache .")
+							def generatedImage=docker.build("duscraperrn/${image}:${BUILD_NUMBER}", "--no-cache .")
 							env.gi=generatedImage
 							docker.withRegistry('https://index.docker.io/v1/','dockercreds'){
 								generatedImage.push()
