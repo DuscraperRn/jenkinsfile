@@ -16,7 +16,7 @@ pipeline{
 		}
 		stage('SCM checkout'){
 			steps{
-				git credentialsId: 'git', url: 'https://github.com/DuscraperRn/softwarefiles.git'
+				git credentialsId: 'git', url: 'https://github.com/DuscraperRn/maven-app.git'
 			}
 		}
 		stage('SonarQube Analysis') {
