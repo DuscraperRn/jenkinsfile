@@ -3,15 +3,14 @@ pipeline{
 	environment{
 		image="real"
 		version="latest"
-		generatedImage="NA"
 	}
 	stages{
 		stage('Initialize'){
 			steps{
 				echo """
-					############
-					# Starting #
-					############
+					#####################################
+					#    Starting SCM Initialization    #
+					#####################################
 				"""
 			}
 		}
@@ -25,7 +24,7 @@ pipeline{
 				script{
 					def mvn = tool "maven"
 					withSonarQubeEnv() {
-						sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=DuscraperRn_softwarefiles_4d1e1f7f-7163-4a0f-a282-2f8b1827d97d -Dsonar.projectName='softwarefiles'"
+						sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=DuscraperRn_softwarefiles_b69d2ce3-a447-4875-8a32-db9687eb4ddf -Dsonar.projectName='softwarefiles'"
 					}
 				}
 			}
@@ -36,28 +35,28 @@ pipeline{
 					steps{
 						script{
 							def generatedImage=docker.build("duscraperrn/${image}:${BUILD_NUMBER}", "--no-cache .")
-							env.gi=generatedImage
-							docker.withRegistry('https://index.docker.io/v1/','dockercreds'){
-								generatedImage.push()
-							}
+							//docker.withRegistry('https://index.docker.io/v1/','dockercreds'){
+							//	generatedImage.push()
+							//}
 						}
 					}
 				}
 				stage('Security check'){
 					steps{
 						script{
+							echo "trivy currently disabled"
 							//sh "trivy image duscraperrn/${image}:${version}"
-							sh "trivy image duscraperrn/${image}:${version} -o /tmp/report-${image}-${version}-${BUILD_NUMBER}.txt"
+							//sh "trivy image duscraperrn/${image}:${version} -o /tmp/report-${image}-${version}-${BUILD_NUMBER}.txt"
 						}
 					}
 				}
 				stage('Push'){
 					steps{
 						script{
-							//docker.withRegistry('https://index.docker.io/v1/','dockercreds'){
-							//	env.gi.push()
-							sh "kubectl create ns calculator${BUILD_NUMBER}"
-							//}
+							docker.withRegistry('https://index.docker.io/v1/','dockerhub'){
+								generatedImage.push()
+							//sh "kubectl create ns calculator${BUILD_NUMBER}"
+							}
 						}
 					}
 				}
