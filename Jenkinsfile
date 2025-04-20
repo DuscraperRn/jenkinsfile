@@ -35,28 +35,28 @@ pipeline{
 					steps{
 						script{
 							def generatedImage=docker.build("duscraperrn/${image}:${BUILD_NUMBER}", "--no-cache .")
-							//docker.withRegistry('https://index.docker.io/v1/','dockercreds'){
-							//	generatedImage.push()
-							//}
+							docker.withRegistry('https://index.docker.io/v1/','dockercreds'){
+								generatedImage.push()
+							}
 						}
 					}
 				}
 				stage('Security check'){
 					steps{
 						script{
-							echo "trivy currently disabled"
+							//echo "trivy currently disabled"
 							//sh "trivy image duscraperrn/${image}:${version}"
-							//sh "trivy image duscraperrn/${image}:${version} -o /tmp/report-${image}-${version}-${BUILD_NUMBER}.txt"
+							sh "trivy image duscraperrn/${image}:${version} -o /tmp/report-${image}-${version}-${BUILD_NUMBER}-${JOB_NAME}-${JENKINS_URL}.txt"
 						}
 					}
 				}
 				stage('Push'){
 					steps{
 						script{
-							docker.withRegistry('https://index.docker.io/v1/','dockerhub'){
-								generatedImage.push()
-								echo "kubectl create ns calculator${BUILD_NUMBER}"
-							}
+							//docker.withRegistry('https://index.docker.io/v1/','dockerhub'){
+							//	generatedImage.push()
+							echo "kubectl create ns calculator${BUILD_NUMBER}"
+							//}
 						}
 					}
 				}
