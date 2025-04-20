@@ -35,7 +35,7 @@ pipeline{
 					steps{
 						script{
 							def generatedImage=docker.build("duscraperrn/${image}:${BUILD_NUMBER}", "--no-cache .")
-							docker.withRegistry('https://index.docker.io/v1/','dockercreds'){
+							docker.withRegistry('https://index.docker.io/v1/','dockerhub'){
 								generatedImage.push()
 							}
 						}
