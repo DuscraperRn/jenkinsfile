@@ -46,7 +46,7 @@ pipeline{
 						script{
 							//echo "trivy currently disabled"
 							//sh "trivy image duscraperrn/${image}:${version}"
-							sh "trivy image duscraperrn/${image}:${version} -o /tmp/report-${image}-${version}-${BUILD_NUMBER}-${JOB_NAME}-${JENKINS_URL}.txt"
+							sh "trivy image duscraperrn/${image}:${version} -o /tmp/report-${image}-${BUILD_NUMBER}.txt"
 						}
 					}
 				}
