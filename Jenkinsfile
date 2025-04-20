@@ -55,7 +55,7 @@ pipeline{
 						script{
 							docker.withRegistry('https://index.docker.io/v1/','dockerhub'){
 								generatedImage.push()
-							//sh "kubectl create ns calculator${BUILD_NUMBER}"
+								echo "kubectl create ns calculator${BUILD_NUMBER}"
 							}
 						}
 					}
