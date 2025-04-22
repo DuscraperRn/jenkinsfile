@@ -44,9 +44,10 @@ pipeline{
 							echo "trivy currently disabled"
 							//sh "trivy image duscraperrn/${image}:${version}"
 							//sh "trivy image duscraperrn/${image}:${version} -o /tmp/report-${image}-${BUILD_NUMBER}.txt"
+							}
 						}
 					}
 				}
-		}
+			}
 	}
 }
