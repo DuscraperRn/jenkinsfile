@@ -52,7 +52,6 @@ pipeline{
 					steps{
 						script{
 							echo "dummy stage ${BUILD_NUMBER}"
-						}
 					}
 				}
 			}
