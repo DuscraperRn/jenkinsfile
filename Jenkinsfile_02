@@ -29,14 +29,12 @@ pipeline{
 				}
 			}
 		}
-		stage('Image'){
+		stage('Maven'){
 			stages{
 				stage('Build'){
 					steps{
 						script{
-							def generatedImage=docker.build("duscraperrn/${image}:${BUILD_NUMBER}", "--no-cache .")
-							docker.withRegistry('https://index.docker.io/v1/','dockerhub'){
-								generatedImage.push()
+								sh 'mvn clean install'
 							}
 						}
 					}
@@ -44,16 +42,16 @@ pipeline{
 				stage('Security check'){
 					steps{
 						script{
-							//echo "trivy currently disabled"
+							echo "trivy currently disabled"
 							//sh "trivy image duscraperrn/${image}:${version}"
-							sh "trivy image duscraperrn/${image}:${version} -o /tmp/report-${image}-${BUILD_NUMBER}.txt"
+							//sh "trivy image duscraperrn/${image}:${version} -o /tmp/report-${image}-${BUILD_NUMBER}.txt"
 						}
 					}
 				}
 				stage('Push'){
 					steps{
 						script{
-							
+							echo "dummy stage ${BUILD_NUMBER}"
 						}
 					}
 				}
