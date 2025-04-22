@@ -38,7 +38,6 @@ pipeline{
 							}
 						}
 					}
-				}
 				stage('Security check'){
 					steps{
 						script{
@@ -48,13 +47,6 @@ pipeline{
 						}
 					}
 				}
-				stage('Push'){
-					steps{
-						script{
-							echo "dummy stage ${BUILD_NUMBER}"
-					}
-				}
-			}
 		}
 	}
 }
