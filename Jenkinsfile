@@ -1,19 +1,7 @@
 pipeline{
 	agent any
-	environment{
-		image="real"
-		version="latest"
-	}
+	environment{	image="real"	}
 	stages{
-		stage('Initialize'){
-			steps{
-				echo """
-					#####################################
-					#    Starting SCM Initialization    #
-					#####################################
-				"""
-			}
-		}
 		stage('SCM checkout'){
 			steps{
 				git credentialsId: 'git', url: 'https://github.com/DuscraperRn/maven-app.git'
@@ -29,31 +17,21 @@ pipeline{
 				}
 			}
 		}
-		stage('Image'){
+		stage('Maven'){
 			stages{
 				stage('Build'){
 					steps{
 						script{
-							def generatedImage=docker.build("duscraperrn/${image}:${BUILD_NUMBER}", "--no-cache .")
-							docker.withRegistry('https://index.docker.io/v1/','dockerhub'){
-								generatedImage.push()
-							}
+								sh 'mvn clean install'
 						}
 					}
 				}
 				stage('Security check'){
 					steps{
 						script{
-							//echo "trivy currently disabled"
+							echo "trivy currently disabled"
 							//sh "trivy image duscraperrn/${image}:${version}"
-							sh "trivy image duscraperrn/${image}:${version} -o /tmp/report-${image}-${BUILD_NUMBER}.txt"
-						}
-					}
-				}
-				stage('Push'){
-					steps{
-						script{
-							
+							//sh "trivy image duscraperrn/${image}:${version} -o /tmp/report-${image}-${BUILD_NUMBER}.txt"
 						}
 					}
 				}
