@@ -28,7 +28,8 @@ pipeline{
 				}
 				stage('Docker file prepration'){
 					steps{
-						dir('DevOpsLab1') {
+						script{
+							dir('DevOpsLab1') {
 							sh'''
 							//echo "trivy currently disabled"
 							git credentialsId: 'git', url: 'https://github.com/DuscraperRn/DevOpsLab1.git'
@@ -42,6 +43,7 @@ pipeline{
 							git push origin main
 
 							'''
+							}
 						}
 					}
 				}
