@@ -38,7 +38,7 @@ pipeline{
 							sh ''' git config user.email "duscraper@gmail.com"  '''
 							sh "ls -lrth;pwd"
 							withCredentials([usernamePassword(credentialsId: 'git')]) {
-							  sh "git add . ; git commit -m 'Added WAR file from pipeline ${BUILD_ID}' ; git push origin master"
+							   sh "git add . ; git commit -m 'Added WAR file from pipeline ${BUILD_ID}' ; git push origin master"
 							}
 							sh "rm -rf DevOpsLab1*"
 							}
