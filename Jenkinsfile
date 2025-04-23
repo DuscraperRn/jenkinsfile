@@ -40,8 +40,8 @@ pipeline{
 							//withCredentials([usernamePassword(credentialsId: 'git')]) {
 							//   sh "git add . ; git commit -m 'Added WAR file from pipeline ${BUILD_ID}' ; git push origin master"
 							//}
-							sh '''echo "duscraperrn/${image}:{BUILD_NUMBER}##{BUILD_ID}" '''
-							def myimage=docker.build("duscraperrn/${image}:{BUILD_ID}","--no-cache .")
+							sh '''echo "duscraperrn/${image}:${BUILD_NUMBER}##${BUILD_ID}" '''
+							def myimage=docker.build("duscraperrn/${image}:${BUILD_ID}","--no-cache .")
 							docker.withRegistry('https://index.docker.io/v1/','dockerhub'){
 								myimage.push()
 							}
