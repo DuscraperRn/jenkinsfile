@@ -26,12 +26,21 @@ pipeline{
 						}
 					}
 				}
-				stage('Security check'){
+				stage('Docker file prepration'){
 					steps{
-						script{
-							echo "trivy currently disabled"
-							//sh "trivy image duscraperrn/${image}:${version}"
-							//sh "trivy image duscraperrn/${image}:${version} -o /tmp/report-${image}-${BUILD_NUMBER}.txt"
+						dir('DevOpsLab1') {
+						sh'''
+							//echo "trivy currently disabled"
+							git credentialsId: 'git', url: 'https://github.com/DuscraperRn/DevOpsLab1.git'
+							git config user.name "DuscraperRn"
+							git config user.email "duscraper@gmail.com"
+							echo "pwd;ls -lrth"
+							mv /var/lib/jenkins/workspace/maven-app_master/target/inpage.war .
+							git add .
+							git commit -m "Added WAR file from pipeline ${BUILD_ID}"
+							git push origin main
+
+						'''
 						}
 					}
 				}
