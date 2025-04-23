@@ -35,7 +35,7 @@ pipeline{
 							script{
 							sh "cp /var/lib/jenkins/workspace/maven-app_master/target/inpage.war ."
 							sh ''' git config user.name "DuscraperRn" '''
-							sh ''' git config user.email "duscraper@gmail.com" '''
+							sh ''' git config user.email "duscraper@gmail.com"  '''
 							sh "ls -lrth;pwd"
 							sh "git add . ; git commit -m 'Added WAR file from pipeline ${BUILD_ID}' ; git push origin master"
 							sh "rm -rf DevOpsLab1*"
