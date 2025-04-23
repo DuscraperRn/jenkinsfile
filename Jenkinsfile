@@ -33,6 +33,7 @@ pipeline{
 							sh "ls -lrth  /var/lib/jenkins/workspace/maven-app_master/target/inpage.war"
 							sh "git config user.name 'DuscraperRn'"
 							sh "git config user.email 'duscraper@gmail.com'"
+							sh "ls -lrth"
 						}
 					}
 				}
