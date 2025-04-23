@@ -10,9 +10,9 @@ pipeline{
 		stage('SonarQube Analysis') {
 			steps{
 				script{
-					def mvn = tool "Default Maven"
+					def mvn = tool "maven"
 					withSonarQubeEnv() {
-						sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=DuscraperRn_maven-app_16b82eec-2db1-49dd-a59c-9968ff54a2e5 -Dsonar.projectName='maven-app'"
+						sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=DuscraperRn_maven-app_e11cb099-eb8f-49b4-b857-b0aec18f1a46 -Dsonar.projectName='maven-app'"
 					}
 				}
 			}
