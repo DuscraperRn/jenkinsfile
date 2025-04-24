@@ -65,12 +65,12 @@ pipeline{
                 		withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]) {
                     		dir('bakwas'){
 								git credentialsId: 'git', url: 'https://github.com/DuscraperRn/integration02.git'
-                        		sh """
+                        		sh """#!/bin/bash
         	                    ls -lrth
             	                cd projectfiles
                 	            ls -rlth
                     	        grep -i "image:" devintegration01.yaml
-								sed -i 's/image.*$/image: duscraperrn\\/"${image}":"${BUILD_ID}"/g' devintegration01.yaml
+								sed -i 's|image.*$|image: duscraperrn|/"${image}":"${BUILD_ID}"|g' devintegration01.yaml
 								grep -i "image:" devintegration01.yaml
             	                cd ..
                 	            git config user.name "DuscraperRn"
