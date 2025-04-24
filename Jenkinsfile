@@ -68,8 +68,9 @@ pipeline{
                 	            ls -rlth
                     	        grep -i "image:" devintegration01.yaml
                         	    //sed -i "s/real:19/real:${BUILD_ID}/g" devintegration01.yaml
-								sed -i 's/image.*$/image: duscraperrn\/${image}:${BUILD_ID}/g' devintegration01.yaml
-        	                    grep -i "image:" devintegration01.yaml
+								sed -i 's/image.*$/image: duscraperrn\\/${image}:${BUILD_ID}/g' devintegration01.yaml
+        	                    sed -i 's/SLASH'
+								grep -i "image:" devintegration01.yaml
             	                cd ..
                 	            git config user.name "DuscraperRn"
                     	        git config user.email "duscraper@gmail.com"
