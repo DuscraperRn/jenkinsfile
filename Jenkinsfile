@@ -60,12 +60,8 @@ pipeline{
                 		script {
                 		//withCredentials([string(credentialsId: 'git-token', variable: 'GIT_TOKEN')]) {
                 		withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]) {
-                    		sh '''
-            	            	echo "SCM PUSH"
-                	        	pwd ; ls -lrth
-                    	    	ls -lrth bakwas
-                    		'''
                     		dir('bakwas'){
+								git credentialsId: 'git', url: 'https://github.com/DuscraperRn/integration02.git'
                         		sh '''
         	                    ls -lrth
             	                cd projectfiles
