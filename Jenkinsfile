@@ -71,7 +71,8 @@ pipeline{
             	                cd projectfiles
                 	            ls -rlth
                     	        grep -i "image:" devintegration01.yaml
-								sed -i "s/image.*$/image: duscraperrn\\/${env.img}:${env.bb}/g" devintegration01.yaml
+								
+								sed -i "s#image.*\$#image: duscraperrn/${env.img}:${env.bb}#g" devintegration01.yaml
 								grep -i "image:" devintegration01.yaml
             	                cd ..
                 	            git config user.name "DuscraperRn"
