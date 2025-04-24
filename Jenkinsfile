@@ -59,7 +59,6 @@ pipeline{
 					steps{
                 		script {
 						environment{
-							img=${image}
 							bb=${BUILD_ID}
 						}
                 		//withCredentials([string(credentialsId: 'git-token', variable: 'GIT_TOKEN')]) {
@@ -71,8 +70,7 @@ pipeline{
             	                cd projectfiles
                 	            ls -rlth
                     	        grep -i "image:" devintegration01.yaml
-								
-								sed -i "s#image.*$#image: duscraperrn/${env.img}:${env.bb}#g" devintegration01.yaml
+								sed -i "s/image.*$/image: duscraperrn\\/${env.image}:${env.bb}/g" devintegration01.yaml
 								grep -i "image:" devintegration01.yaml
             	                cd ..
                 	            git config user.name "DuscraperRn"
