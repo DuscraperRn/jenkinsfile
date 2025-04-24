@@ -57,8 +57,34 @@ pipeline{
 				}
 				stage('SCM Push'){
 					steps{
-						sh ''' echo "Updating YAML files" '''
-					}
+                		script {
+                		//withCredentials([string(credentialsId: 'git-token', variable: 'GIT_TOKEN')]) {
+                		withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]) {
+                    		sh '''
+            	            	echo "SCM PUSH"
+                	        	pwd ; ls -lrth
+                    	    	ls -lrth bakwas
+                    		'''
+                    		dir('bakwas'){
+                        		sh '''
+        	                    ls -lrth
+            	                cd projectfiles
+                	            ls -rlth
+                    	        grep -i "image:" devintegration01.yaml
+                        	    sed -i "s/real:19/real:${BUILD_ID}/g" devintegration01.yaml
+        	                    grep -i "image:" devintegration01.yaml
+            	                cd ..
+                	            git config user.name "DuscraperRn"
+                    	        git config user.email "duscraper@gmail.com"
+                        	    git add .
+                            	git commit -m "Jenkins: ${BUILD_ID}"
+                            	git push origin master
+                        		'''
+                        		}
+                    		}
+                		}
+            		}
+        		}
 				}
 			}
 		}
