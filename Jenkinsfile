@@ -67,7 +67,7 @@ pipeline{
             	                cd projectfiles
                 	            ls -rlth
                     	        grep -i "image:" devintegration01.yaml'''
-								sh "sed -i 's/image.*$/image: duscraperrn\\/${image}:${BUILD_ID}/g' devintegration01.yaml"
+								sh 'sed -i "s/image.*$/image: duscraperrn\\/${env.image}:${env.BUILD_ID}/g" devintegration01.yaml'
 								sh '''
 								grep -i "image:" devintegration01.yaml
             	                cd ..
