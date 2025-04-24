@@ -12,7 +12,7 @@ pipeline{
 				script{
 					def mvn = tool "Maven 3.9.9"
 					withSonarQubeEnv() {
-						sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=DuscraperRn_maven-app_16b82eec-2db1-49dd-a59c-9968ff54a2e5 -Dsonar.projectName='maven-app'"
+						sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=DuscraperRn_maven-app_2efd0cbe-fce7-4ada-8798-01b6847d9712 -Dsonar.projectName='maven-app'"
 					}
 				}
 			}
@@ -34,21 +34,30 @@ pipeline{
 						dir('DevOpsLab1'){
 							script{
 							sh "cp /var/lib/jenkins/workspace/maven-app_master/target/inpage.war ."
-							sh ''' git config user.name "DuscraperRn" '''
-							sh ''' git config user.email "duscraper@gmail.com"  '''
 							sh "ls -lrth;pwd"
-							//withCredentials([usernamePassword(credentialsId: 'git')]) {
-							//   sh "git add . ; git commit -m 'Added WAR file from pipeline ${BUILD_ID}' ; git push origin master"
-							//}
+							withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]) {
+								sh '''
+								  git config user.name "DuscraperRn" 
+								  git config user.email "duscraper@gmail.com"  
+								  git add . 
+								  git commit -m 'Added WAR file from pipeline ${BUILD_ID}' 
+								  git push origin master"
+								'''
+							}
 							sh '''echo "duscraperrn/${image}:${BUILD_NUMBER}##${BUILD_ID}" '''
-							//def myimage=docker.build("duscraperrn/${image}:${BUILD_ID}","--no-cache .")
-							def myimage=docker.build("duscraperrn/${image}:32","--no-cache .")
+							def myimage=docker.build("duscraperrn/${image}:${BUILD_ID}","--no-cache .")
+							//def myimage=docker.build("duscraperrn/${image}:32","--no-cache .")
 							docker.withRegistry('https://index.docker.io/v1/','dockerhub'){
 								myimage.push()
 							}
 							sh "rm -rf DevOpsLab1*"
 							}
 						}
+					}
+				}
+				stage('SCM Push'){
+					steps{
+						sh "echo "Updating YAML files"
 					}
 				}
 			}
