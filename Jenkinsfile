@@ -57,7 +57,7 @@ pipeline{
 				}
 				stage('SCM Push'){
 					steps{
-						sh "echo "Updating YAML files"
+						sh ''' echo "Updating YAML files" '''
 					}
 				}
 			}
