@@ -41,7 +41,7 @@ pipeline{
 								  git config user.email "duscraper@gmail.com"  
 								  git add . 
 								  git commit -m 'Added WAR file from pipeline ${BUILD_ID}' 
-								  git push origin master"
+								  git push origin master
 								'''
 							}
 							sh '''echo "duscraperrn/${image}:${BUILD_NUMBER}##${BUILD_ID}" '''
