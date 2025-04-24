@@ -58,6 +58,10 @@ pipeline{
 				stage('SCM Push'){
 					steps{
                 		script {
+						environment{
+							img=${image}
+							bb=${BUILD_ID}
+						}
                 		//withCredentials([string(credentialsId: 'git-token', variable: 'GIT_TOKEN')]) {
                 		withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]) {
                     		dir('bakwas'){
@@ -67,7 +71,7 @@ pipeline{
             	                cd projectfiles
                 	            ls -rlth
                     	        grep -i "image:" devintegration01.yaml'''
-								sh "sed -i 's#image.*$#image: duscraperrn/${env.image}:${BUILD_ID}#g' devintegration01.yaml"
+								sh '''sed -i 's#image.*$#image: duscraperrn/${env.img}:${env.bb}#g' devintegration01.yaml'''
 								sh '''
 								grep -i "image:" devintegration01.yaml
             	                cd ..
