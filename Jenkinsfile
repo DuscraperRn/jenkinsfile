@@ -36,7 +36,8 @@ pipeline{
 						dir('DevOpsLab1'){
 							script{
 							//sh "cp /var/lib/jenkins/workspace/deployment_master/target/inpage.war ."
-							sh '/home/jenkins/workspace/deployment_master/target/inpage.war .'
+							sh 'whoami;cat  /etc/hostname'
+							sh 'cp /home/jenkins/workspace/deployment_master/target/inpage.war .'
 							sh "ls -lrth;pwd"
 							withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]) {
 								sh '''
