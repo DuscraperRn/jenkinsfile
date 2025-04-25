@@ -12,7 +12,7 @@ pipeline{
 				script{
 					def mvn = tool "Maven 3.9.9"
 					withSonarQubeEnv() {
-						sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=DuscraperRn_maven-app_2efd0cbe-fce7-4ada-8798-01b6847d9712 -Dsonar.projectName='maven-app'"
+						sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=DuscraperRn_maven-app_f513ce9b-fb27-4947-b825-cfeba0e7ed14 -Dsonar.projectName='maven-app'"
 					}
 				}
 			}
@@ -58,19 +58,15 @@ pipeline{
 				stage('SCM Push'){
 					steps{
                 		script {
-						environment{
-							bb=${BUILD_ID}
-						}
                 		//withCredentials([string(credentialsId: 'git-token', variable: 'GIT_TOKEN')]) {
                 		withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]) {
-                    		dir('bakwas'){
+                    		dir('deployment'){
 								git credentialsId: 'git', url: 'https://github.com/DuscraperRn/integration02.git'
                         		sh """#!/bin/bash
-        	                    ls -lrth
             	                cd projectfiles
                 	            ls -rlth
                     	        grep -i "image:" devintegration01.yaml
-								sed -i 's|image.*$|image: duscraperrn|/\$5{image}:\$5{BUILD_ID}"|g' devintegration01.yaml
+								sed -i "s/image.*\$/image: duscraperrn\\/${image}:${BUILD_ID}/g" devintegration01.yaml
 								grep -i "image:" devintegration01.yaml
             	                cd ..
                 	            git config user.name "DuscraperRn"
