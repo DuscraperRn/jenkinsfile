@@ -1,5 +1,7 @@
 pipeline{
-	agent any
+	agent {
+		label 'khopdi'
+	}
 	environment{	image="real"	}
 	stages{
 		stage('SCM checkout'){
