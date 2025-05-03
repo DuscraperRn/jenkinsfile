@@ -86,7 +86,9 @@ pipeline{
 						}
 						stage('Security Scan'){
 							steps{
-								sh "trivy image duscraperrn/${image}:${version} -o /tmp/report-${image}-${BUILD_NUMBER}.txt"
+								script{
+									sh "trivy image duscraperrn/${image}:${version} -o /tmp/report-${image}-${BUILD_NUMBER}.txt"
+								}
 							}
 						}
 					}
