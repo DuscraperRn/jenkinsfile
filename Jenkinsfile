@@ -94,7 +94,6 @@ pipeline{
 			}
 		}
 	}
-	}
 	post{
 		success{
 			sh 'echo "Pipeline successfully completed."'
