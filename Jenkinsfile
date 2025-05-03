@@ -1,6 +1,6 @@
 pipeline{
 	agent {
-		label 'khopdi'
+		label 'docker'
 	}
 	environment{	image="real"	}
 	stages{
@@ -14,7 +14,7 @@ pipeline{
 				script{
 					def mvn = tool "Maven 3.9.9"
 					withSonarQubeEnv() {
-						sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=DuscraperRn_maven-app_f513ce9b-fb27-4947-b825-cfeba0e7ed14 -Dsonar.projectName='maven-app'"
+						sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=DuscraperRn_maven-app_f36ef034-a35c-495b-aaba-b79656b3822b -Dsonar.projectName='maven-app'"
 					}
 				}
 			}
