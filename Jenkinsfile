@@ -60,8 +60,11 @@ pipeline{
 				stage('SCM Push'){
 					steps{
 						script {
+							sh 'echo "HHHHHHHHHHHHHHHHHHH"'
 							withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]) {
+								sh 'echo "HHHHHHHHHHHHHHHHHHHGGGGG"'
 								dir('deployment'){
+									sh 'echo "HHHHHHHHHHHHHHHHHHHJJJJJJJ"'
 									git credentialsId: 'git', url: 'https://github.com/DuscraperRn/integration02.git'
 									sh """#!/bin/bash
 										cd projectfiles
