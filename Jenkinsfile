@@ -62,7 +62,7 @@ pipeline{
 						stage('Updating k8s application architecture'){
 							steps{
 								script {
-								//withCredentials([string(credentialsId: 'git-token', variable: 'GIT_TOKEN')]) {
+
 								withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]) {
 									dir('deployment'){
 										git credentialsId: 'git', url: 'https://github.com/DuscraperRn/integration02.git'
@@ -81,7 +81,7 @@ pipeline{
 										"""
 										}
 									}
-								//}
+								}
 							}
 						}
 						stage('Security Scan'){
