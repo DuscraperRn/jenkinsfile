@@ -81,16 +81,17 @@ pipeline{
 										"""
 										}
 									}
-								}
-							}
-						}
-						stage('Security Scan'){
-							steps{
-								script{
 									sh "trivy image duscraperrn/${image}:${version} -o /tmp/report-${image}-${BUILD_NUMBER}.txt"
 								}
 							}
 						}
+						//stage('Security Scan'){
+						//	steps{
+						//		script{
+						//			sh "trivy image duscraperrn/${image}:${version} -o /tmp/report-${image}-${BUILD_NUMBER}.txt"
+						//		}
+						//	}
+						//}
 					}
         		}
 			}
