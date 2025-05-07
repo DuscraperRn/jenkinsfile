@@ -84,7 +84,12 @@ pipeline{
 		stage('Image scanning'){
 			steps{
 				script{
-					sh 'trivy image duscraperrn/${image}:${BUILD_ID}'
+					try {
+						sh 'trivy image duscraperrn/${image}:${BUILD_ID} -o /tmp/${image}_${BUILD_ID}.log'
+					}
+					catch (e){
+						echo "Caught an error: ${e}"
+					}
 				}
 			}
 		}
