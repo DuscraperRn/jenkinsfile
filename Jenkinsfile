@@ -3,7 +3,11 @@ pipeline{
 	//agent {
 	//	label 'bond'
 	//}
-	environment{	image="real"	}
+	environment{	
+	    image="real"
+	    GIT_REPO="https://github.com/DuscraperRn/Dockerfile.git"
+	    BRANCH = 'main'
+	}
 	stages{
 		stage('SCM checkout AWS'){
 			steps{
@@ -41,27 +45,35 @@ pipeline{
 						}
 						dir('DevOpsLab1'){
 							script{
-							sh 'cp /var/lib/jenkins/workspace/devintegration_master/target/inpage.war .'
-							sh "ls -lrth;pwd"
-							withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]) {
-								sh '''
-									pwd
-									git config user.name "DuscraperRn" 
-									git config user.email "duscraper@gmail.com"  
-									git add . 
-									#git commit -m 'Added WAR file from pipeline ${BUILD_ID}' 
-									git show | head
-									#git config --global --add safe.directory /var/lib/jenkins/workspace/devintegration_master
-									#git push origin master
-								'''
-							}
-							sh '''echo "duscraperrn/${image}:${BUILD_NUMBER}##${BUILD_ID}" '''
-							def myimage=docker.build("duscraperrn/${image}:${BUILD_ID}","--no-cache .")
-							//def myimage=docker.build("duscraperrn/${image}:32","--no-cache .")
-							docker.withRegistry('https://index.docker.io/v1/','dockerhub'){
-								myimage.push()
-							}
-							//sh "rm -rf DevOpsLab1*"
+								try{
+									sh 'cp /var/lib/jenkins/workspace/${JOB_NAME}/target/inpage.war .'
+									sh "ls -lrth;pwd"
+								
+									withCredentials([gitUsernamePassword(credentialsId: 'git_local')]) {
+										sh '''
+										pwd
+										git config user.name "DuscraperRn" 
+										git config user.email "duscraper@gmail.com"  
+										git add . 
+										git show | head
+										git commit -m 'Added WAR file from pipeline ${BUILD_ID}' 
+										
+										#git remote set-url origin https://$GIT_USERNAME:$GIT_PASSWORD@github.com/DuscraperRn/Dockerfile.git
+										#git remote set-url origin git@github.com:DuscraperRn/Dockerfile.git
+										
+										git config --global --add safe.directory /var/lib/jenkins/workspace/${JOB_NAME}
+										git push origin master
+										'''
+									}
+								}
+								catch (err) {
+									echo "Caught an error: ${err}"
+								}
+								def myimage=docker.build("duscraperrn/${image}:${BUILD_ID}","--no-cache .")
+								docker.withRegistry('https://index.docker.io/v1/','dockerhub'){
+									myimage.push()
+								}
+								sh "rm -rf DevOpsLab1*"
 							}
 						}
 					}
@@ -82,5 +94,3 @@ pipeline{
 		}
 	}
 }
-
-
