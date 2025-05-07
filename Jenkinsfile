@@ -46,7 +46,7 @@ pipeline{
 							script{
 								try{
 									sh 'cp ${WORKSPACE}/target/inpage.war .'
-									#sh 'cp /var/lib/jenkins/workspace/${JOB_NAME}/target/inpage.war .' #For normal pipeline build
+									
 									sh "ls -lrth;pwd"
 								
 									withCredentials([gitUsernamePassword(credentialsId: 'git_local')]) {
