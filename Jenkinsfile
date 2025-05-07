@@ -35,7 +35,9 @@ pipeline{
 				stage('Docker file prepration'){
 					steps{
 						dir('DevOpsLab1'){
-							git credentialsId: 'git', url: 'https://github.com/DuscraperRn/DevOpsLab1.git'
+							withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]) {
+								git url: 'https://github.com/DuscraperRn/DevOpsLab1.git'
+							}
 						}
 						dir('DevOpsLab1'){
 							script{
