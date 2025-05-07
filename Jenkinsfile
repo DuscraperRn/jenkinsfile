@@ -17,6 +17,9 @@ pipeline{
 			}
 		}
 		stage('SonarQube Analysis') {
+			options {
+				timeout(time:8, unit:'MINUTES')
+			}
 			steps{
 				script{
 					def mvn = tool "Maven 3.9.9"
@@ -27,6 +30,9 @@ pipeline{
 			}
 		}
 		stage('Maven'){
+			options {
+				timeout(time:10, unit:'MINUTES')
+			}
 			stages{
 				stage('Build'){
 					steps{
@@ -82,6 +88,9 @@ pipeline{
 			}
 		}
 		stage('Image scanning'){
+			options {
+				timeout(time:2, unit:'MINUTES')
+			}
 			steps{
 				script{
 					try {
