@@ -5,8 +5,7 @@ pipeline{
 	//}
 	environment{	
 	    image="real"
-	    GIT_REPO="https://github.com/DuscraperRn/Dockerfile.git"
-	    BRANCH = 'main'
+	    file_build = "yes"
 	}
 	stages{
 		stage('SCM checkout AWS'){
@@ -46,7 +45,8 @@ pipeline{
 						dir('DevOpsLab1'){
 							script{
 								try{
-									sh 'cp /var/lib/jenkins/workspace/${JOB_NAME}/target/inpage.war .'
+									sh 'cp ${WORKSPACE}/target/inpage.war .'
+									#sh 'cp /var/lib/jenkins/workspace/${JOB_NAME}/target/inpage.war .' #For normal pipeline build
 									sh "ls -lrth;pwd"
 								
 									withCredentials([gitUsernamePassword(credentialsId: 'git_local')]) {
