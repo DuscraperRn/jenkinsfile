@@ -1,7 +1,8 @@
 pipeline{
-	agent {
-		label 'docker'
-	}
+	agent any
+	//agent {
+	//	label 'bond'
+	//}
 	environment{	image="real"	}
 	stages{
 		stage('SCM checkout'){
@@ -14,7 +15,7 @@ pipeline{
 				script{
 					def mvn = tool "Maven 3.9.9"
 					withSonarQubeEnv() {
-						sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=DuscraperRn_maven-app_f36ef034-a35c-495b-aaba-b79656b3822b -Dsonar.projectName='maven-app'"
+						sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=DuscraperRn_maven-app_33e0c9d6-8052-4114-87bc-5334b55ab6c4 -Dsonar.projectName='maven-app'"
 					}
 				}
 			}
@@ -57,35 +58,7 @@ pipeline{
 						}
 					}
 				}
-				stage('SCM Push'){
-					steps{
-						script {
-							sh 'echo "HHHHHHHHHHHHHHHHHHH"'
-							withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]) {
-								sh 'echo "HHHHHHHHHHHHHHHHHHHGGGGG"'
-								dir('deployment'){
-									sh 'echo "HHHHHHHHHHHHHHHHHHHJJJJJJJ"'
-									git credentialsId: 'git', url: 'https://github.com/DuscraperRn/integration02.git'
-									sh """#!/bin/bash
-										cd projectfiles
-										ls -rlth
-										grep -i "image:" devintegration01.yaml
-										sed -i "s/image.*\$/image: duscraperrn\\/${image}:${BUILD_ID}/g" devintegration01.yaml
-										grep -i "image:" devintegration01.yaml
-										cd ..
-										git config user.name "DuscraperRn"
-										git config user.email "duscraper@gmail.com"
-										git add .
-										git commit -m "Jenkins: ${BUILD_ID}"
-										git push origin master
-										sh "trivy image duscraperrn/${image}:${version} -o /tmp/report-${image}-${BUILD_NUMBER}.txt"
-									"""
-								}
-							}
-							sh "trivy image duscraperrn/${image}:${version} -o /tmp/report-${image}-${BUILD_NUMBER}.txt"
-						}
-					}
-        		}
+			//
 			}
 		}
 	}
