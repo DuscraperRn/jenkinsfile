@@ -5,7 +5,7 @@ pipeline{
 	//}
 	environment{	image="real"	}
 	stages{
-		stage('SCM checkout'){
+		stage('SCM checkout AWS'){
 			steps{
 				git credentialsId: 'git', url: 'https://github.com/DuscraperRn/maven-app.git'
 			}
