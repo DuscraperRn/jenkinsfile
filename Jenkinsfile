@@ -49,6 +49,7 @@ pipeline{
 								  git config user.email "duscraper@gmail.com"  
 								  git add . 
 								  git commit -m 'Added WAR file from pipeline ${BUILD_ID}' 
+								  //git config --global --add safe.directory /var/lib/jenkins/workspace/devintegration_master
 								  git push origin master
 								'''
 							}
