@@ -81,6 +81,13 @@ pipeline{
 			//
 			}
 		}
+		stage('Image scanning'){
+			steps{
+				script{
+					sh 'trivy image duscraperrn/${image}:${BUILD_ID}'
+				}
+			}
+		}
 	}
 	post{
 		success{
