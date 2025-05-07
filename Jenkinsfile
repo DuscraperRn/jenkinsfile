@@ -45,12 +45,14 @@ pipeline{
 							sh "ls -lrth;pwd"
 							withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]) {
 								sh '''
-								  git config user.name "DuscraperRn" 
-								  git config user.email "duscraper@gmail.com"  
-								  git add . 
-								  git commit -m 'Added WAR file from pipeline ${BUILD_ID}' 
-								  //git config --global --add safe.directory /var/lib/jenkins/workspace/devintegration_master
-								  git push origin master
+									pwd
+									git config user.name "DuscraperRn" 
+									git config user.email "duscraper@gmail.com"  
+									git add . 
+									git commit -m 'Added WAR file from pipeline ${BUILD_ID}' 
+									git show | head
+									//git config --global --add safe.directory /var/lib/jenkins/workspace/devintegration_master
+									git push origin master
 								'''
 							}
 							sh '''echo "duscraperrn/${image}:${BUILD_NUMBER}##${BUILD_ID}" '''
@@ -59,7 +61,7 @@ pipeline{
 							docker.withRegistry('https://index.docker.io/v1/','dockerhub'){
 								myimage.push()
 							}
-							sh "rm -rf DevOpsLab1*"
+							//sh "rm -rf DevOpsLab1*"
 							}
 						}
 					}
