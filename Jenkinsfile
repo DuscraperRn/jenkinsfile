@@ -36,7 +36,7 @@ pipeline{
 					steps{
 						dir('DevOpsLab1'){
 							withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]) {
-								git url: 'https://github.com/DuscraperRn/DevOpsLab1.git'
+								git url: 'https://github.com/DuscraperRn/Dockerfile.git'
 							}
 						}
 						dir('DevOpsLab1'){
