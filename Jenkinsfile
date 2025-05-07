@@ -7,7 +7,10 @@ pipeline{
 	stages{
 		stage('SCM checkout AWS'){
 			steps{
-				git credentialsId: 'git', url: 'https://github.com/DuscraperRn/maven-app.git'
+				withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]) {
+					git url: 'https://github.com/DuscraperRn/maven-app.git'
+				}
+				
 			}
 		}
 		stage('SonarQube Analysis') {
