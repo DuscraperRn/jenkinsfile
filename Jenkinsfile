@@ -17,22 +17,22 @@ pipeline{
 			}
 		}
 		stage('SonarQube Analysis') {
-			options {
-				timeout(time:8, unit:'MINUTES')
-			}
+			//options {
+			//	timeout(time:8, unit:'MINUTES')
+			//}
 			steps{
 				script{
 					def mvn = tool "Maven 3.9.9"
 					withSonarQubeEnv() {
-						sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=DuscraperRn_maven-app_33e0c9d6-8052-4114-87bc-5334b55ab6c4 -Dsonar.projectName='maven-app'"
+						sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=DuscraperRn_maven-app_c4e2f895-7569-46dc-b9f2-cdf2936e3d02 -Dsonar.projectName='maven-app'"
 					}
 				}
 			}
 		}
 		stage('Maven'){
-			options {
-				timeout(time:10, unit:'MINUTES')
-			}
+			//options {
+			//	timeout(time:10, unit:'MINUTES')
+			//}
 			stages{
 				stage('Build'){
 					steps{
