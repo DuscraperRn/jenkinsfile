@@ -17,9 +17,9 @@ pipeline{
 			}
 		}
 		stage('SonarQube Analysis') {
-			//options {
-			//	timeout(time:8, unit:'MINUTES')
-			//}
+			options {
+				timeout(time:8, unit:'MINUTES')
+			}
 			steps{
 				script{
 					def mvn = tool "Maven 3.9.9"
