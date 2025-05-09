@@ -10,7 +10,7 @@ pipeline{
 	stages{
 		stage('SCM checkout AWS'){
 			steps{
-				withCredentials([gitUsernamePassword(credentialsId: 'git_local', gitToolName: 'Default')]) {
+				withCredentials([gitUsernamePassword(credentialsId: 'git_local')]) {
 					git url: 'https://github.com/DuscraperRn/maven-app.git'
 				}
 				
@@ -44,7 +44,7 @@ pipeline{
 				stage('Docker file prepration'){
 					steps{
 						dir('DevOpsLab1'){
-							withCredentials([gitUsernamePassword(credentialsId: 'git', gitToolName: 'Default')]) {
+							withCredentials([gitUsernamePassword(credentialsId: 'git')]) {
 								git url: 'https://github.com/DuscraperRn/Dockerfile.git'
 							}
 						}
