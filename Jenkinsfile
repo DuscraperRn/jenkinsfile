@@ -24,7 +24,7 @@ pipeline{
 				script{
 					def mvn = tool "Maven 3.9.9"
 					withSonarQubeEnv() {
-						sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=DuscraperRn_maven-app_c4e2f895-7569-46dc-b9f2-cdf2936e3d02 -Dsonar.projectName='maven-app'"
+						sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=DuscraperRn_maven-app_0673f7f0-6b82-4b57-b970-1aff2e9d3fee -Dsonar.projectName='maven-app'"
 					}
 				}
 			}
@@ -94,7 +94,7 @@ pipeline{
 			steps{
 				script{
 					try {
-						sh 'trivy image duscraperrn/${image}:${BUILD_ID} -o /tmp/${image}_${BUILD_ID}.log'
+						sh 'trivy image duscraperrn/${image}:${BUILD_ID} -o /tmp/duscraper_${image}_${BUILD_ID}.log'
 					}
 					catch (e){
 						echo "Caught an error: ${e}"
