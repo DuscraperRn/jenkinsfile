@@ -10,7 +10,7 @@ pipeline{
 	stages{
 		stage('SCM checkout AWS'){
 			steps{
-				withCredentials([gitUsernamePassword(credentialsId: 'git_local')]) {
+				withCredentials([gitUsernamePassword(credentialsId: 'git_local', branch: 'master')]) {
 					git url: 'https://github.com/DuscraperRn/maven-app.git'
 				}
 				
