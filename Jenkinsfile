@@ -4,7 +4,7 @@ pipeline{
     stages{
         stage('Lib Call'){
             steps{
-                echo "Executing stage"
+                echo "Executing newwww stage"
             }
         }
         stage('Actual call'){
