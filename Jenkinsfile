@@ -7,7 +7,7 @@ pipeline{
                 echo "Executing important stage"
             }
         }
-        stage('Actual call'){
+        stage('Actual call start'){
             steps{
                 script{
                     def c = customer()  // call() is invoked
